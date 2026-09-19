@@ -164,18 +164,20 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               ))}
             </div>
 
-            {/* Foto Principal com Tag FULL */}
-            <div className="ml-gallery-main-display">
-              <span className="ml-pdp-full-badge">
-                <Zap size={11} fill="currentColor" />
-                <span>FULL</span>
-              </span>
+            {/* Foto Principal com Tag FULL (Grande, destaque total estilo ML) */}
+            <div className="ml-gallery-main-col">
+              <div className="ml-gallery-main-display">
+                <span className="ml-pdp-full-badge">
+                  <Zap size={11} fill="currentColor" />
+                  <span>FULL</span>
+                </span>
 
-              <img
-                src={thumbnails[activeThumbIndex]}
-                alt={product.name}
-                className="ml-gallery-hero-image"
-              />
+                <img
+                  src={thumbnails[activeThumbIndex]}
+                  alt={product.name}
+                  className="ml-gallery-hero-image"
+                />
+              </div>
 
               <div className="ml-gallery-trust-badges">
                 <div className="ml-trust-badge-item">
