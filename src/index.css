@@ -2661,27 +2661,13 @@ button:active,
 /* ==========================================================================
    RESPONSIVE VISIBILITY UTILITIES
    ========================================================================== */
-.ml-desktop-only {
-  display: none !important;
-}
-
-.ml-mobile-only {
-  display: block;
+@media (max-width: 1023px) {
+  .ml-desktop-only {
+    display: none !important;
+  }
 }
 
 @media (min-width: 1024px) {
-  .ml-desktop-only {
-    display: block !important;
-  }
-
-  .ml-desktop-only.flex {
-    display: flex !important;
-  }
-
-  .ml-desktop-only.grid {
-    display: grid !important;
-  }
-
   .ml-mobile-only {
     display: none !important;
   }
@@ -2895,10 +2881,12 @@ button:active,
   }
 
   .ml-categories-grid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    width: 100% !important;
   }
 
   .ml-category-circle-card {

@@ -34,7 +34,17 @@ export const MLCategoriesSection: React.FC<MLCategoriesSectionProps> = ({
       </div>
 
       {/* Desktop Circles Grid */}
-      <div className="ml-categories-grid ml-desktop-only">
+      <div
+        className="ml-categories-grid ml-desktop-only"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '16px',
+          width: '100%'
+        }}
+      >
         {CATEGORIES.map(cat => {
           const isActive = selectedCategory === cat.id;
           const IconComponent = cat.Icon;
@@ -44,6 +54,13 @@ export const MLCategoriesSection: React.FC<MLCategoriesSectionProps> = ({
               className={`ml-category-circle-card ${isActive ? 'active' : ''}`}
               onClick={() => onSelectCategory(cat.id)}
               title={`Filtrar por ${cat.label}`}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1
+              }}
             >
               <div className="ml-category-circle-icon">
                 <IconComponent size={28} strokeWidth={2} />
