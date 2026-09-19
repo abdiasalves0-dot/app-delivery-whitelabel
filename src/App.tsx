@@ -98,17 +98,20 @@ const AppContent: React.FC = () => {
         {/* Global Toast Container */}
         <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
+        {/* Global Header with Desktop Navigation */}
+        <Header
+          currentTab={currentTab}
+          onSelectTab={setCurrentTab}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onOpenNotifications={() => setIsNotificationsOpen(true)}
+          onOpenAddressSelector={() => setIsAddressModalOpen(true)}
+        />
+
         {/* App Main Scroll View */}
         <main className="app-screen-body">
           <div key={currentTab} className="tab-view-animated">
             {currentTab === 'home' && (
               <>
-                <Header
-                  onOpenSearch={() => setIsSearchOpen(true)}
-                  onOpenNotifications={() => setIsNotificationsOpen(true)}
-                  onOpenAddressSelector={() => setIsAddressModalOpen(true)}
-                />
-
                 <CategoriesList
                   selectedCategory={selectedCategory}
                   onSelectCategory={setSelectedCategory}

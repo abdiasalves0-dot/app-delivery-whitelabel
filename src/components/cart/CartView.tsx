@@ -46,18 +46,18 @@ export const CartView: React.FC<CartViewProps> = ({
         >
           <ShoppingBag size={40} />
         </div>
-        <h2 style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '6px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>
           Seu carrinho está vazio
         </h2>
-        <p style={{ fontSize: '13px', color: 'var(--text-muted)', textAlign: 'center', maxWidth: '240px', marginBottom: '24px' }}>
-          Que tal adicionar uma pizza quentinha ou um hambúrguer suculento?
+        <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', textAlign: 'center', maxWidth: '300px', marginBottom: '24px' }}>
+          Explore o catálogo oficial da Brago Distribuidora e adicione os produtos desejados!
         </p>
         <button
           className="btn-checkout-cta"
           onClick={onExploreMenu}
-          style={{ maxWidth: '220px' }}
+          style={{ maxWidth: '240px' }}
         >
-          <span>Explorar Cardápio</span>
+          <span>Explorar Catálogo</span>
           <ArrowRight size={16} />
         </button>
       </div>
@@ -76,7 +76,7 @@ export const CartView: React.FC<CartViewProps> = ({
           <ArrowLeft size={19} strokeWidth={2.2} />
         </button>
 
-        <h1 className="cart-page-title">Cart</h1>
+        <h1 className="cart-page-title">Carrinho de Compras</h1>
 
         <button
           className="detail-icon-btn"
@@ -132,37 +132,49 @@ export const CartView: React.FC<CartViewProps> = ({
         </div>
       )}
 
-      {/* Cart Items List */}
-      <div className="cart-items-list">
-        {items.map(item => (
-          <CartItem
-            key={item.id}
-            item={item}
-            onUpdateQuantity={updateQuantity}
-            onRemove={removeFromCart}
-          />
-        ))}
+      {/* Responsive 2-Column Desktop Grid */}
+      <div className="cart-desktop-grid">
+        {/* Left Column: Items List */}
+        <div className="cart-left-col">
+          <div className="cart-items-list">
+            {items.map(item => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onUpdateQuantity={updateQuantity}
+                onRemove={removeFromCart}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column: Sticky Summary & Checkout */}
+        <div className="cart-right-col">
+          <div className="cart-summary-card">
+            <h3 className="cart-summary-heading">Resumo do Pedido</h3>
+
+            {/* Promo Code Input */}
+            <CouponInput
+              onFeedback={(success, msg) => {
+                onShowToast(success ? 'success' : 'error', msg);
+              }}
+            />
+
+            {/* Financial Breakdown */}
+            <CartSummary />
+
+            {/* Primary Checkout CTA */}
+            <button
+              className="btn-checkout-cta"
+              onClick={onProceedToCheckout}
+              aria-label={`Finalizar pedido valor ${formatCurrency(totals.total)}`}
+            >
+              <span>Finalizar Compra</span>
+              <span>{formatCurrency(totals.total)}</span>
+            </button>
+          </div>
+        </div>
       </div>
-
-      {/* Promo Code Input */}
-      <CouponInput
-        onFeedback={(success, msg) => {
-          onShowToast(success ? 'success' : 'error', msg);
-        }}
-      />
-
-      {/* Financial Breakdown */}
-      <CartSummary />
-
-      {/* Primary Checkout CTA */}
-      <button
-        className="btn-checkout-cta"
-        onClick={onProceedToCheckout}
-        aria-label={`Finalizar pedido valor ${formatCurrency(totals.total)}`}
-      >
-        <span>Checkout</span>
-        <span>{formatCurrency(totals.total)}</span>
-      </button>
     </div>
   );
 };

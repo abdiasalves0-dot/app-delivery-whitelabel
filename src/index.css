@@ -314,7 +314,7 @@ button:active,
   background-color: var(--bg-app);
 }
 
-/* Real Mobile App Container (100% on mobile, centered max-width on large screens) */
+/* Real Mobile & Desktop App Container */
 .app-mobile-shell {
   width: 100%;
   max-width: 480px;
@@ -325,6 +325,7 @@ button:active,
   flex-direction: column;
   position: relative;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.06);
+  transition: max-width 0.3s ease;
 }
 
 @media (max-width: 480px) {
@@ -334,15 +335,29 @@ button:active,
   }
 }
 
+@media (min-width: 768px) {
+  .app-mobile-shell {
+    max-width: 1280px;
+    box-shadow: none;
+    padding: 0 16px;
+  }
+}
+
 /* App Viewport / Main Scroll Area */
 .app-screen-body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); /* space for bottom navigation bar */
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); /* space for bottom navigation bar on mobile */
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .app-screen-body {
+    padding-bottom: 40px; /* no bottom dock on desktop */
+  }
 }
 
 .app-screen-body::-webkit-scrollbar {
@@ -350,7 +365,7 @@ button:active,
 }
 
 /* ==========================================================================
-   HEADER COMPONENT
+   HEADER COMPONENT (RESPONSIVO MOBILE & PC/DESKTOP)
    ========================================================================== */
 
 .app-header {
@@ -362,6 +377,162 @@ button:active,
   top: 0;
   background-color: var(--bg-app);
   z-index: 30;
+  transition: padding 0.2s ease, border-color 0.2s ease;
+}
+
+@media (max-width: 767px) {
+  .app-header.mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    gap: 20px;
+  }
+}
+
+.header-left-col {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-desktop-center {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .header-desktop-center {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+.header-desktop-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  flex: 1;
+  max-width: 340px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-desktop-search:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(var(--color-primary-rgb), 0.15);
+}
+
+.header-search-placeholder {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-search-shortcut {
+  font-size: 10px;
+  font-weight: 700;
+  background-color: var(--bg-input);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.header-desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-card);
+  padding: 4px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.header-nav-link:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.header-nav-link.active {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: var(--shadow-primary);
+}
+
+.header-desktop-cart-btn {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .header-desktop-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-active);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+    transition: var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .header-desktop-cart-btn:hover,
+  .header-desktop-cart-btn.active {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-primary);
+  }
+
+  .mobile-only-action {
+    display: none !important;
+  }
+}
+
+.desktop-cart-label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.desktop-cart-badge {
+  background-color: var(--color-accent-red);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  margin-left: 2px;
 }
 
 .header-greeting {
@@ -1660,3 +1831,184 @@ button:active,
   font-size: 11px;
   color: var(--text-muted);
 }
+
+/* ==========================================================================
+   DESKTOP & PC RESPONSIVE ADAPTATIONS (>= 768px, >= 1024px, >= 1280px)
+   ========================================================================== */
+
+/* 1. Bottom Navigation Dock: Hidden on Desktop */
+@media (min-width: 768px) {
+  .bottom-nav-dock {
+    display: none !important;
+  }
+}
+
+/* 2. Responsive Product Grid */
+@media (min-width: 640px) {
+  .products-grid-layout {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .products-grid-layout {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    padding: 0 20px 32px 20px;
+  }
+
+  .product-card-img-wrapper {
+    height: 160px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .products-grid-layout {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+}
+
+/* 3. Categories List & Promo Banner Desktop Enhancements */
+@media (min-width: 768px) {
+  .categories-scroll-wrapper {
+    padding: 16px 20px 20px 20px;
+    gap: 16px;
+  }
+
+  .category-card-pill {
+    min-width: 85px;
+    padding: 14px 18px 12px;
+  }
+
+  .category-icon-box {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .category-label {
+    font-size: 13px;
+  }
+
+  .promo-banner-container {
+    margin: 8px 20px 28px 20px;
+    padding: 28px 36px;
+    border-radius: 28px;
+  }
+
+  .promo-headline {
+    font-size: 32px;
+  }
+
+  .promo-banner-graphic {
+    width: 210px;
+    height: 180px;
+    right: 20px;
+    bottom: -10px;
+  }
+
+  .promo-rider-img {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+/* 4. Desktop 2-Column Cart Layout */
+.cart-desktop-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .cart-desktop-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .cart-right-col .cart-summary-card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-subtle);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    position: sticky;
+    top: 90px;
+  }
+
+  .cart-summary-heading {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+}
+
+/* 5. Desktop Modals & Dialogs (Center Window Dialogs) */
+@media (min-width: 768px) {
+  .modal-backdrop {
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+
+  .modal-sheet-content {
+    border-radius: var(--radius-xl);
+    max-width: 560px;
+    max-height: 85vh;
+    padding: 28px;
+    animation: sheetSpringRise 0.35s var(--ease-out-expo) forwards;
+  }
+
+  /* Product Detail Modal Desktop Layout */
+  .product-detail-backdrop {
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+
+  .product-detail-modal {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    max-width: 860px;
+    height: auto;
+    max-height: 88vh;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-float);
+    border: 1px solid var(--border-subtle);
+    animation: sheetSpringRise 0.35s var(--ease-out-expo) forwards;
+  }
+
+  .detail-desktop-split-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .detail-desktop-left .detail-hero-section {
+    height: 320px;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .detail-desktop-left .detail-hero-img-box {
+    max-width: 100%;
+    height: 100%;
+    border-radius: 20px;
+  }
+
+  .detail-bottom-action-bar {
+    position: relative;
+    border-bottom-left-radius: var(--radius-xl);
+    border-bottom-right-radius: var(--radius-xl);
+    padding: 18px 28px;
+  }
+}
+
