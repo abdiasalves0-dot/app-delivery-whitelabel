@@ -3051,26 +3051,53 @@ button:active,
 }
 
 /* ==========================================================================
-   MERCADO LIVRE DESKTOP 3-COLUMN PDP (PRODUCT DETAIL PAGE)
+   MERCADO LIVRE DEDICATED PDP (PRODUCT DETAIL PAGE)
    ========================================================================== */
-@media (min-width: 1024px) {
-  .product-detail-modal.ml-pdp-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 95vw;
-    max-width: 1380px;
-    height: 92vh;
-    background-color: var(--bg-card);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-    z-index: 130;
-    overflow: hidden;
+.ml-pdp-dedicated-page {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 20px 60px 20px;
+}
+
+.ml-pdp-main-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .ml-pdp-dedicated-page {
+    padding: 12px 14px 48px 14px;
+  }
+
+  .ml-pdp-3col-container {
     display: flex;
     flex-direction: column;
-    animation: fadeInModal 0.25s ease-out;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .ml-pdp-col-gallery {
+    flex-direction: column-reverse;
+  }
+
+  .ml-gallery-thumbnails {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 8px;
+  }
+
+  .ml-pdp-col-buybox {
+    order: 3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ml-pdp-dedicated-page {
+    padding: 24px 20px 64px 20px;
   }
 
   /* Breadcrumbs & Actions Top Bar */
@@ -3078,7 +3105,7 @@ button:active,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 28px;
+    padding: 14px 28px;
     border-bottom: 1px solid var(--border-subtle);
     background-color: var(--bg-card-muted);
   }

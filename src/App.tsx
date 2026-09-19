@@ -23,7 +23,7 @@ import { mockProducts } from './data/mockProducts';
 import { Product, ProductCategory } from './types/product';
 
 // Detail & Flow Components
-import { ProductDetailModal } from './components/product/ProductDetailModal';
+import { ProductDetailPage } from './components/product/ProductDetailPage';
 import { CartView } from './components/cart/CartView';
 import { CheckoutModal } from './components/checkout/CheckoutModal';
 import { OrderTrackingModal } from './components/orders/OrderTrackingModal';
@@ -61,7 +61,9 @@ const AppContent: React.FC = () => {
     const handleSwitchTab = (e: Event) => {
       const customEvent = e as CustomEvent<TabType>;
       if (customEvent.detail) {
+        setSelectedProduct(null);
         setCurrentTab(customEvent.detail);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
     window.addEventListener('nav:switch-tab', handleSwitchTab);
@@ -83,6 +85,11 @@ const AppContent: React.FC = () => {
 
   const dismissToast = (id: string) => {
     setToasts(prev => prev.filter(t => t.id !== id));
+  };
+
+  const handleSelectProduct = (product: Product) => {
+    setSelectedProduct(product);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Quick add to cart from card
@@ -118,7 +125,11 @@ const AppContent: React.FC = () => {
         {/* Global Header with Desktop Navigation */}
         <Header
           currentTab={currentTab}
-          onSelectTab={setCurrentTab}
+          onSelectTab={(tab) => {
+            setSelectedProduct(null);
+            setCurrentTab(tab);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           onOpenSearch={() => setIsSearchOpen(true)}
           onOpenNotifications={() => setIsNotificationsOpen(true)}
           onOpenAddressSelector={() => setIsAddressModalOpen(true)}
@@ -126,99 +137,108 @@ const AppContent: React.FC = () => {
 
         {/* App Main Scroll View */}
         <main className="app-screen-body">
-          <div key={currentTab} className="tab-view-animated">
-            {currentTab === 'home' && (
-              <>
-                {/* Mercado Livre Hero Banner Slider */}
-                <MLHeroBanner onClaimOffer={handleClaimOffer} />
+          {selectedProduct ? (
+            <ProductDetailPage
+              product={selectedProduct}
+              onBack={() => {
+                setSelectedProduct(null);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onAddedToCartToast={() => showToast('success', `${selectedProduct.name} adicionado ao carrinho!`)}
+            />
+          ) : (
+            <div key={currentTab} className="tab-view-animated">
+              {currentTab === 'home' && (
+                <>
+                  {/* Mercado Livre Hero Banner Slider */}
+                  <MLHeroBanner onClaimOffer={handleClaimOffer} />
 
-                {/* Mercado Livre Quick Benefits Bar */}
-                <DesktopBenefitsBar />
+                  {/* Mercado Livre Quick Benefits Bar */}
+                  <DesktopBenefitsBar />
 
-                {/* Popular Categories (Circles on Desktop, Pills on Mobile) */}
-                <MLCategoriesSection
-                  selectedCategory={selectedCategory}
-                  onSelectCategory={setSelectedCategory}
-                />
-
-                {/* Section 1: Ofertas do dia */}
-                <ProductGrid
-                  products={filteredProducts}
-                  onSelectProduct={setSelectedProduct}
-                  onQuickAdd={handleQuickAdd}
-                  title={selectedCategory === 'all' ? 'Ofertas do dia' : `Catálogo: ${selectedCategory.toUpperCase()}`}
-                  onSeeAll={() => setSelectedCategory('all')}
-                />
-
-                {/* Intermediate Meli+ Style Club Banner */}
-                <MLMeliPlusBanner onSubscribe={() => showToast('info', 'Clube Brago+ ativado com sucesso para sua conta!')} />
-
-                {/* Section 2: Mais Vendidos (se estiver vendo todas) */}
-                {selectedCategory === 'all' && (
-                  <ProductGrid
-                    products={bestSellerProducts}
-                    onSelectProduct={setSelectedProduct}
-                    onQuickAdd={handleQuickAdd}
-                    title="Mais Vendidos da Distribuidora"
+                  {/* Popular Categories (Circles on Desktop, Pills on Mobile) */}
+                  <MLCategoriesSection
+                    selectedCategory={selectedCategory}
+                    onSelectCategory={setSelectedCategory}
                   />
-                )}
-              </>
-            )}
 
-            {currentTab === 'favorites' && (
-              <FavoritesView
-                onSelectProduct={setSelectedProduct}
-                onQuickAdd={handleQuickAdd}
-                onExploreMenu={() => setCurrentTab('home')}
-              />
-            )}
+                  {/* Section 1: Ofertas do dia */}
+                  <ProductGrid
+                    products={filteredProducts}
+                    onSelectProduct={handleSelectProduct}
+                    onQuickAdd={handleQuickAdd}
+                    title={selectedCategory === 'all' ? 'Ofertas do dia' : `Catálogo: ${selectedCategory.toUpperCase()}`}
+                    onSeeAll={() => setSelectedCategory('all')}
+                  />
 
-            {currentTab === 'cart' && (
-              <CartView
-                onProceedToCheckout={() => setIsCheckoutOpen(true)}
-                onExploreMenu={() => setCurrentTab('home')}
-                onShowToast={showToast}
-              />
-            )}
+                  {/* Intermediate Meli+ Style Club Banner */}
+                  <MLMeliPlusBanner onSubscribe={() => showToast('info', 'Clube Brago+ ativado com sucesso para sua conta!')} />
 
-            {currentTab === 'orders' && (
-              <OrderHistoryView
-                onOpenTracking={(order) => {
-                  setActiveOrder(order);
-                  setIsTrackingOpen(true);
-                }}
-                onExploreMenu={() => setCurrentTab('home')}
-                onShowToast={showToast}
-              />
-            )}
+                  {/* Section 2: Mais Vendidos (se estiver vendo todas) */}
+                  {selectedCategory === 'all' && (
+                    <ProductGrid
+                      products={bestSellerProducts}
+                      onSelectProduct={handleSelectProduct}
+                      onQuickAdd={handleQuickAdd}
+                      title="Mais Vendidos da Distribuidora"
+                    />
+                  )}
+                </>
+              )}
 
-            {currentTab === 'profile' && (
-              <ProfileView
-                onOpenAddressManager={() => setIsAddressModalOpen(true)}
-                onOpenWhitelabel={() => setIsWhitelabelOpen(true)}
-                onOpenOrders={() => setCurrentTab('orders')}
-                onOpenFavorites={() => setCurrentTab('favorites')}
-                onOpenAuthModal={() => setIsAuthModalOpen(true)}
-                onShowToast={showToast}
-              />
-            )}
-          </div>
+              {currentTab === 'favorites' && (
+                <FavoritesView
+                  onSelectProduct={handleSelectProduct}
+                  onQuickAdd={handleQuickAdd}
+                  onExploreMenu={() => setCurrentTab('home')}
+                />
+              )}
+
+              {currentTab === 'cart' && (
+                <CartView
+                  onProceedToCheckout={() => setIsCheckoutOpen(true)}
+                  onExploreMenu={() => setCurrentTab('home')}
+                  onShowToast={showToast}
+                />
+              )}
+
+              {currentTab === 'orders' && (
+                <OrderHistoryView
+                  onOpenTracking={(order) => {
+                    setActiveOrder(order);
+                    setIsTrackingOpen(true);
+                  }}
+                  onExploreMenu={() => setCurrentTab('home')}
+                  onShowToast={showToast}
+                />
+              )}
+
+              {currentTab === 'profile' && (
+                <ProfileView
+                  onOpenAddressManager={() => setIsAddressModalOpen(true)}
+                  onOpenWhitelabel={() => setIsWhitelabelOpen(true)}
+                  onOpenOrders={() => setCurrentTab('orders')}
+                  onOpenFavorites={() => setCurrentTab('favorites')}
+                  onOpenAuthModal={() => setIsAuthModalOpen(true)}
+                  onShowToast={showToast}
+                />
+              )}
+            </div>
+          )}
 
           {/* Institutional Desktop Footer */}
           <Footer />
         </main>
 
         {/* Bottom Navigation Dock */}
-        <BottomNav currentTab={currentTab} onSelectTab={setCurrentTab} />
-
-        {/* Modals and Overlays */}
-        {selectedProduct && (
-          <ProductDetailModal
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-            onAddedToCartToast={() => showToast('success', `${selectedProduct.name} adicionado ao carrinho!`)}
-          />
-        )}
+        <BottomNav
+          currentTab={currentTab}
+          onSelectTab={(tab) => {
+            setSelectedProduct(null);
+            setCurrentTab(tab);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
 
         {/* Search Modal */}
         <SearchModal
