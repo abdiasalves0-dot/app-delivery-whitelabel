@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider, useCart } from './context/CartContext';
@@ -13,9 +13,10 @@ import { SearchModal } from './components/common/SearchModal';
 import { ToastContainer, ToastMessage } from './components/common/Toast';
 
 // Home Components
-import { CategoriesList } from './components/home/CategoriesList';
-import { PromoBanner } from './components/home/PromoBanner';
+import { MLCategoriesSection } from './components/home/MLCategoriesSection';
+import { MLHeroBanner } from './components/home/MLHeroBanner';
 import { DesktopBenefitsBar } from './components/home/DesktopBenefitsBar';
+import { MLMeliPlusBanner } from './components/home/MLMeliPlusBanner';
 import { ProductGrid } from './components/home/ProductGrid';
 import { Footer } from './components/common/Footer';
 import { mockProducts } from './data/mockProducts';
@@ -55,6 +56,18 @@ const AppContent: React.FC = () => {
   // Toast notifications
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
+  // Listen for navigation events (e.g. from PDP "Comprar agora")
+  useEffect(() => {
+    const handleSwitchTab = (e: Event) => {
+      const customEvent = e as CustomEvent<TabType>;
+      if (customEvent.detail) {
+        setCurrentTab(customEvent.detail);
+      }
+    };
+    window.addEventListener('nav:switch-tab', handleSwitchTab);
+    return () => window.removeEventListener('nav:switch-tab', handleSwitchTab);
+  }, []);
+
   const showToast = (type: 'success' | 'error' | 'info', text: string) => {
     const newToast: ToastMessage = {
       id: generateId('toast'),
@@ -81,17 +94,19 @@ const AppContent: React.FC = () => {
     showToast('success', `${product.name} adicionado ao carrinho!`);
   };
 
-  // Promo Banner 30% OFF Claim
+  // Promo Claim
   const handleClaimOffer = () => {
     applyCoupon('PROMO30');
     showToast('success', 'Cupom PROMO30 (30% OFF) aplicado automaticamente!');
-    setCurrentTab('home');
   };
 
   // Filter products by selected category
   const filteredProducts = selectedCategory === 'all'
     ? mockProducts
     : mockProducts.filter(p => p.category === selectedCategory);
+
+  // Best sellers
+  const bestSellerProducts = mockProducts.filter(p => p.isBestSeller || p.rating >= 4.8);
 
   return (
     <div className="app-root-container">
@@ -114,22 +129,39 @@ const AppContent: React.FC = () => {
           <div key={currentTab} className="tab-view-animated">
             {currentTab === 'home' && (
               <>
-                <CategoriesList
+                {/* Mercado Livre Hero Banner Slider */}
+                <MLHeroBanner onClaimOffer={handleClaimOffer} />
+
+                {/* Mercado Livre Quick Benefits Bar */}
+                <DesktopBenefitsBar />
+
+                {/* Popular Categories (Circles on Desktop, Pills on Mobile) */}
+                <MLCategoriesSection
                   selectedCategory={selectedCategory}
                   onSelectCategory={setSelectedCategory}
                 />
 
-                <PromoBanner onClaimOffer={handleClaimOffer} />
-
-                <DesktopBenefitsBar />
-
+                {/* Section 1: Ofertas do dia */}
                 <ProductGrid
                   products={filteredProducts}
                   onSelectProduct={setSelectedProduct}
                   onQuickAdd={handleQuickAdd}
-                  title={selectedCategory === 'all' ? 'Best Sellers' : `Cardápio: ${selectedCategory.toUpperCase()}`}
+                  title={selectedCategory === 'all' ? 'Ofertas do dia' : `Catálogo: ${selectedCategory.toUpperCase()}`}
                   onSeeAll={() => setSelectedCategory('all')}
                 />
+
+                {/* Intermediate Meli+ Style Club Banner */}
+                <MLMeliPlusBanner onSubscribe={() => showToast('info', 'Clube Brago+ ativado com sucesso para sua conta!')} />
+
+                {/* Section 2: Mais Vendidos (se estiver vendo todas) */}
+                {selectedCategory === 'all' && (
+                  <ProductGrid
+                    products={bestSellerProducts}
+                    onSelectProduct={setSelectedProduct}
+                    onQuickAdd={handleQuickAdd}
+                    title="Mais Vendidos da Distribuidora"
+                  />
+                )}
               </>
             )}
 
@@ -179,9 +211,7 @@ const AppContent: React.FC = () => {
         {/* Bottom Navigation Dock */}
         <BottomNav currentTab={currentTab} onSelectTab={setCurrentTab} />
 
-        {/* ================= MODALS & FLOWS ================= */}
-
-        {/* Product Detail Modal (Screen 2 faithful recreation) */}
+        {/* Modals and Overlays */}
         {selectedProduct && (
           <ProductDetailModal
             product={selectedProduct}
