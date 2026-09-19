@@ -2012,3 +2012,650 @@ button:active,
   }
 }
 
+/* ==========================================================================
+   MERCADO LIVRE STYLE DESKTOP EXPERIENCE (>= 1024px)
+   ========================================================================== */
+
+/* Header 2-Tier Layout */
+.ml-header-top-row,
+.ml-header-bottom-row {
+  display: none;
+}
+
+.mobile-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .mobile-header-inner {
+    display: none !important;
+  }
+
+  .ml-desktop-header {
+    flex-direction: column;
+    padding: 12px 24px 10px 24px !important;
+    gap: 12px !important;
+    background-color: var(--bg-app);
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Tier 1: Logo + Search + Promo Banner */
+  .ml-header-top-row {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 32px;
+  }
+
+  .ml-header-logo-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .ml-header-logo-box:hover {
+    transform: translateY(-1px);
+  }
+
+  .ml-logo-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.3);
+  }
+
+  .ml-logo-text-box {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .ml-logo-brand-title {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+
+  .ml-logo-brand-sub {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--color-primary);
+    margin-top: 2px;
+  }
+
+  /* Mercado Livre Iconic Wide Search Bar */
+  .ml-header-search-form {
+    flex: 1;
+    max-width: 620px;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-xs);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-subtle);
+    height: 42px;
+    padding: 0 4px 0 16px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .ml-header-search-form:hover,
+  .ml-header-search-form:focus-within {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+    border-color: rgba(var(--color-primary-rgb), 0.5);
+  }
+
+  .ml-header-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .ml-header-search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .ml-search-divider {
+    width: 1px;
+    height: 24px;
+    background-color: var(--border-subtle);
+    margin: 0 8px;
+  }
+
+  .ml-header-search-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    border-radius: var(--radius-xs);
+    transition: color 0.2s, background-color 0.2s;
+  }
+
+  .ml-header-search-btn:hover {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+
+  /* Promo Banner Tag on Right */
+  .ml-header-promo-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ml-header-promo-banner:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .ml-promo-banner-badge {
+    background-color: rgba(0, 166, 80, 0.12);
+    color: #00A650;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ml-promo-banner-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .ml-promo-text-bold {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .ml-promo-text-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Tier 2: Location + Nav Menu + User Menu */
+  .ml-header-bottom-row {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 13.5px;
+  }
+
+  .ml-header-address-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    max-width: 240px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+
+  .ml-header-address-btn:hover {
+    background-color: var(--bg-card-muted);
+  }
+
+  .ml-address-pin {
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .ml-address-text-box {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    line-height: 1.2;
+  }
+
+  .ml-address-label {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .ml-address-street {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ml-address-chevron {
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  /* Nav Menu in Center */
+  .ml-header-nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ml-nav-link {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s;
+  }
+
+  .ml-nav-link:hover {
+    color: var(--color-primary);
+  }
+
+  .ml-nav-link.active {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .ml-nav-has-sub {
+    cursor: pointer;
+  }
+
+  /* User Menu on Right */
+  .ml-header-user-menu {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .ml-user-link {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+
+  .ml-user-link:hover,
+  .ml-user-link.active {
+    color: var(--color-primary);
+  }
+
+  .ml-theme-toggle-btn,
+  .ml-notifications-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    position: relative;
+    transition: color 0.2s, background-color 0.2s;
+  }
+
+  .ml-theme-toggle-btn:hover,
+  .ml-notifications-btn:hover {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+
+  .ml-badge-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-accent-red);
+    border: 1.5px solid var(--bg-card);
+  }
+
+  /* Cart Button with ML Red Badge */
+  .ml-cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.2s;
+  }
+
+  .ml-cart-button:hover,
+  .ml-cart-button.active {
+    color: var(--color-primary);
+  }
+
+  .ml-cart-icon-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ml-cart-count-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: var(--color-accent-red);
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--bg-card);
+  }
+}
+
+/* ==========================================================================
+   DESKTOP BENEFITS BAR (ESTILO MERCADO LIVRE)
+   ========================================================================== */
+.desktop-benefits-container {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktop-benefits-container {
+    display: block;
+    margin: 0 20px 24px 20px;
+  }
+
+  .benefits-inner-row {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+  }
+
+  .benefit-icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .benefit-text-box {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .benefit-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .benefit-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .benefit-divider {
+    width: 1px;
+    height: 36px;
+    background-color: var(--border-subtle);
+    margin: 0 16px;
+  }
+}
+
+/* ==========================================================================
+   MERCADO LIVRE STYLE PRODUCT CARDS
+   ========================================================================== */
+.ml-full-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #FFFFFF;
+  color: #00A650;
+  font-size: 10px;
+  font-weight: 900;
+  font-style: italic;
+  padding: 3px 7px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 166, 80, 0.2);
+}
+
+.ml-pricing-row {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+}
+
+.ml-original-price {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.ml-current-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.ml-discount-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #00A650;
+}
+
+.ml-installments-text {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.ml-shipping-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #00A650;
+  margin-top: 4px;
+}
+
+.ml-card-bottom-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ml-seller-tag {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   DESKTOP INSTITUTIONAL FOOTER (ESTILO MERCADO LIVRE)
+   ========================================================================== */
+.desktop-footer {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktop-footer {
+    display: block;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 48px;
+    padding: 40px 24px 28px 24px;
+  }
+
+  .footer-values-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 36px;
+  }
+
+  .footer-value-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .footer-value-icon {
+    color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .footer-value-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .footer-value-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .footer-links-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+
+  .footer-col-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .footer-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-nav-list a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-nav-list a:hover {
+    color: var(--color-primary);
+  }
+
+  .footer-payment-desc {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .footer-payment-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .payment-badge {
+    background-color: var(--bg-card-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+  }
+
+  .footer-bottom-bar {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-copyright-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+  }
+
+  .footer-legal-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+}
+
+

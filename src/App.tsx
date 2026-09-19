@@ -15,7 +15,9 @@ import { ToastContainer, ToastMessage } from './components/common/Toast';
 // Home Components
 import { CategoriesList } from './components/home/CategoriesList';
 import { PromoBanner } from './components/home/PromoBanner';
+import { DesktopBenefitsBar } from './components/home/DesktopBenefitsBar';
 import { ProductGrid } from './components/home/ProductGrid';
+import { Footer } from './components/common/Footer';
 import { mockProducts } from './data/mockProducts';
 import { Product, ProductCategory } from './types/product';
 
@@ -119,6 +121,8 @@ const AppContent: React.FC = () => {
 
                 <PromoBanner onClaimOffer={handleClaimOffer} />
 
+                <DesktopBenefitsBar />
+
                 <ProductGrid
                   products={filteredProducts}
                   onSelectProduct={setSelectedProduct}
@@ -167,6 +171,9 @@ const AppContent: React.FC = () => {
               />
             )}
           </div>
+
+          {/* Institutional Desktop Footer */}
+          <Footer />
         </main>
 
         {/* Bottom Navigation Dock */}

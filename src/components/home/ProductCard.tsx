@@ -1,5 +1,5 @@
 import React from 'react';
-import { Package, Clock, Plus, Heart } from 'lucide-react';
+import { Package, Clock, Plus, Heart, Zap, Truck } from 'lucide-react';
 import { Product } from '../../types/product';
 import { useFavorites } from '../../context/FavoritesContext';
 import { formatCurrency } from '../../utils/formatters';
@@ -23,9 +23,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     toggleFavorite(product.id);
   };
 
+  // Simulated installment calculation (like Mercado Livre "em 3x sem juros")
+  const installmentValue = (product.basePrice / 3).toFixed(2);
+  const originalPrice = (product.basePrice * 1.15).toFixed(2);
+
   return (
     <div
-      className="product-card-item"
+      className="product-card-item ml-style-card"
       onClick={() => onClick(product)}
       role="button"
       tabIndex={0}
@@ -39,6 +43,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <Heart size={14} fill={favorited ? 'currentColor' : 'none'} />
       </button>
 
+      {/* Product Image Box */}
       <div className="product-card-img-wrapper">
         <img
           src={product.image}
@@ -46,30 +51,52 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           className="product-card-thumb"
           loading="lazy"
         />
+        {/* ML Style Full Delivery Badge */}
+        <span className="ml-full-badge" title="Envio mais rápido pelo centro de distribuição">
+          <Zap size={10} fill="#00A650" color="#00A650" /> FULL
+        </span>
       </div>
 
+      {/* Product Header & Pricing */}
       <div className="product-card-header">
         <h3 className="product-card-title">{product.name}</h3>
-        <p className="product-card-price">{formatCurrency(product.basePrice)}</p>
+
+        {/* Pricing Row with ML style discount */}
+        <div className="ml-pricing-row">
+          <span className="ml-original-price">R$ {originalPrice.replace('.', ',')}</span>
+          <div className="ml-current-price-row">
+            <span className="product-card-price">{formatCurrency(product.basePrice)}</span>
+            <span className="ml-discount-tag">15% OFF</span>
+          </div>
+          <span className="ml-installments-text">
+            em 3x de R$ {installmentValue.replace('.', ',')} sem juros
+          </span>
+        </div>
+
+        {/* Free Shipping Tag */}
+        <div className="ml-shipping-tag">
+          <Truck size={12} />
+          <span>Frete grátis</span>
+        </div>
       </div>
 
+      {/* Meta Row & Action Button */}
       <div className="product-card-meta-row">
-        <span className="meta-chip calories">
-          <Package size={12} /> Cód. {product.calories}
-        </span>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <span className="meta-chip">
-            <Clock size={12} /> {product.prepTime}
+        <div className="ml-card-bottom-info">
+          <span className="meta-chip calories">
+            <Package size={12} /> Cód. {product.calories}
           </span>
-          <button
-            className="product-add-btn"
-            onClick={(e) => onQuickAdd(e, product)}
-            aria-label={`Adicionar ${product.name} ao carrinho`}
-            title="Adicionar ao carrinho"
-          >
-            <Plus size={16} strokeWidth={2.5} />
-          </button>
+          <span className="ml-seller-tag">por Brago Distribuidora</span>
         </div>
+
+        <button
+          className="product-add-btn"
+          onClick={(e) => onQuickAdd(e, product)}
+          aria-label={`Adicionar ${product.name} ao carrinho`}
+          title="Adicionar ao carrinho"
+        >
+          <Plus size={16} strokeWidth={2.5} />
+        </button>
       </div>
     </div>
   );
