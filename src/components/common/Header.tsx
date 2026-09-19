@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, ChevronDown, MapPin, Home, Heart, ShoppingBag, ReceiptText, User, Sun, Moon, Sparkles, Package, Zap, ArrowRight } from 'lucide-react';
+import { Search, Bell, ChevronDown, MapPin, ShoppingCart, Sun, Moon, Package } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useCart } from '../../context/CartContext';
@@ -20,10 +20,10 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSearch,
   onOpenNotifications,
   onOpenAddressSelector,
-  unreadNotificationsCount = 2
+  unreadNotificationsCount = 3
 }) => {
   const { user, selectedAddress } = useAuth();
-  const { config, isDarkMode, toggleDarkMode } = useTheme();
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const { totals } = useCart();
   const [searchInput, setSearchInput] = useState('');
 
@@ -32,13 +32,24 @@ export const Header: React.FC<HeaderProps> = ({
     onOpenSearch();
   };
 
+  const getInitials = (name?: string) => {
+    if (!name) return 'AA';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    }
+    return parts[0].slice(0, 2).toUpperCase();
+  };
+
+  const firstName = user?.name ? user.name.trim().split(' ')[0] : 'Abdias';
+
   return (
     <header className={`app-header ml-desktop-header ${currentTab !== 'home' ? 'mobile-hidden' : ''}`}>
       {/* =========================================================================
           DESKTOP TIER 1: LOGO + WIDE SEARCH BAR + PROMO BANNER (Mercado Livre Style)
           ========================================================================= */}
       <div className="ml-header-top-row">
-        {/* Left: Brand Logo */}
+        {/* Left Column: Brand Logo */}
         <div
           className="ml-header-logo-box"
           onClick={() => onSelectTab && onSelectTab('home')}
@@ -55,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Center: Mercado Livre Iconic Search Bar */}
+        {/* Center Column: Mercado Livre Iconic Search Bar */}
         <form className="ml-header-search-form" onSubmit={handleSearchSubmit} onClick={onOpenSearch}>
           <input
             type="text"
@@ -76,15 +87,15 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </form>
 
-        {/* Right: Promotional Benefit Highlight */}
+        {/* Right Column: Meli+ Style Pill Banner */}
         <div className="ml-header-promo-banner" onClick={() => onSelectTab && onSelectTab('home')}>
-          <div className="ml-promo-banner-badge">
-            <Zap size={14} fill="#00A650" color="#00A650" />
-            <span>30% OFF</span>
+          <div className="ml-promo-badge">
+            <span className="ml-promo-badge-text">brago</span>
+            <span className="ml-promo-badge-plus">+</span>
           </div>
-          <div className="ml-promo-banner-text">
-            <span className="ml-promo-text-bold">Frete Grátis</span>
-            <span className="ml-promo-text-sub">em pedidos &gt; R$ 200</span>
+          <div className="ml-promo-text">
+            <span className="ml-promo-text-bold">4 benefícios e e-books</span>
+            <span className="ml-promo-text-sub">em 1 assinatura</span>
           </div>
         </div>
       </div>
@@ -93,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
           DESKTOP TIER 2: LOCATION + CATEGORIES MENU + USER ACTIONS & CART
           ========================================================================= */}
       <div className="ml-header-bottom-row">
-        {/* Left: Mercado Livre Delivery Address Selector */}
+        {/* Left Column: Mercado Livre Delivery Address Selector (Clean, no box) */}
         <div
           className="ml-header-address-btn"
           onClick={onOpenAddressSelector}
@@ -101,63 +112,70 @@ export const Header: React.FC<HeaderProps> = ({
           tabIndex={0}
           title="Clique para alterar seu endereço de entrega"
         >
-          <MapPin size={18} className="ml-address-pin" />
+          <MapPin size={22} strokeWidth={1.7} className="ml-address-pin" />
           <div className="ml-address-text-box">
             <span className="ml-address-label">
-              Enviar para {user?.name ? user.name.split(' ')[0] : 'Cliente'}
+              Enviar para {firstName}
             </span>
             <span className="ml-address-street">
               {selectedAddress
-                ? `${selectedAddress.street}, ${selectedAddress.number}`
-                : 'Informe seu endereço'}
+                ? `${selectedAddress.street}${selectedAddress.number ? ` ${selectedAddress.number}` : ''}`
+                : 'Rua F SN'}
             </span>
           </div>
-          <ChevronDown size={14} className="ml-address-chevron" />
         </div>
 
-        {/* Center: Navigation Links & Categories */}
+        {/* Center Column: Navigation Links & Categories */}
         <nav className="ml-header-nav-menu" aria-label="Menu Principal">
-          <button
-            className={`ml-nav-link ${currentTab === 'home' ? 'active' : ''}`}
-            onClick={() => onSelectTab && onSelectTab('home')}
-          >
-            <span>Início</span>
-          </button>
-
           <button
             className="ml-nav-link ml-nav-has-sub"
             onClick={onOpenSearch}
           >
             <span>Categorias</span>
-            <ChevronDown size={12} />
+            <ChevronDown size={12} strokeWidth={2.5} />
           </button>
 
           <button
             className="ml-nav-link"
             onClick={() => onSelectTab && onSelectTab('home')}
           >
-            <span>Ofertas do Dia</span>
+            <span>Ofertas</span>
           </button>
 
           <button
             className="ml-nav-link"
             onClick={() => onSelectTab && onSelectTab('home')}
           >
-            <span>Embalagens</span>
+            <span>Cupons</span>
           </button>
 
           <button
             className="ml-nav-link"
             onClick={() => onSelectTab && onSelectTab('home')}
           >
-            <span>Limpeza</span>
+            <span>Supermercado</span>
           </button>
 
           <button
             className="ml-nav-link"
             onClick={() => onSelectTab && onSelectTab('home')}
           >
-            <span>Panificação</span>
+            <span>Moda</span>
+          </button>
+
+          <button
+            className="ml-nav-link ml-nav-with-badge"
+            onClick={() => onSelectTab && onSelectTab('home')}
+          >
+            <span className="ml-nav-badge-pill">GRÁTIS</span>
+            <span>Mercado Play</span>
+          </button>
+
+          <button
+            className="ml-nav-link"
+            onClick={() => onSelectTab && onSelectTab('home')}
+          >
+            <span>Vender</span>
           </button>
 
           <button
@@ -168,25 +186,31 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </nav>
 
-        {/* Right: User Menu, Orders, Favorites & Cart */}
+        {/* Right Column: User Menu, Orders, Favorites & Cart */}
         <div className="ml-header-user-menu">
           {onSelectTab && (
             <>
+              {/* User Profile with Avatar Circle + Name */}
               <button
-                className={`ml-user-link ${currentTab === 'profile' ? 'active' : ''}`}
+                className={`ml-user-profile-btn ${currentTab === 'profile' ? 'active' : ''}`}
                 onClick={() => onSelectTab('profile')}
               >
-                <span>Olá, {user?.name ? user.name.split(' ')[0] : 'Cliente'}</span>
-                <ChevronDown size={12} />
+                <div className="ml-user-avatar-circle">
+                  <span>{getInitials(user?.name)}</span>
+                </div>
+                <span className="ml-user-name">{firstName}</span>
+                <ChevronDown size={12} strokeWidth={2.5} />
               </button>
 
+              {/* Compras (Orders) */}
               <button
                 className={`ml-user-link ${currentTab === 'orders' ? 'active' : ''}`}
                 onClick={() => onSelectTab('orders')}
               >
-                <span>Meus pedidos</span>
+                <span>Compras</span>
               </button>
 
+              {/* Favoritos */}
               <button
                 className={`ml-user-link ${currentTab === 'favorites' ? 'active' : ''}`}
                 onClick={() => onSelectTab('favorites')}
@@ -198,39 +222,39 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Dark Mode Toggle */}
           <button
-            className="ml-theme-toggle-btn"
+            className="ml-icon-btn ml-theme-toggle"
             onClick={toggleDarkMode}
             aria-label={isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
             title={isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro'}
           >
-            {isDarkMode ? <Sun size={17} /> : <Moon size={17} />}
+            {isDarkMode ? <Sun size={17} strokeWidth={2} /> : <Moon size={17} strokeWidth={2} />}
           </button>
 
-          {/* Notification Button */}
+          {/* Notification Button with Badge */}
           <button
-            className="ml-notifications-btn"
+            className="ml-icon-btn ml-notifications-btn"
             onClick={onOpenNotifications}
             aria-label="Notificações"
             title="Avisos e novidades"
           >
-            <Bell size={18} />
-            {unreadNotificationsCount > 0 && <span className="ml-badge-dot" />}
+            <Bell size={18} strokeWidth={2} />
+            {unreadNotificationsCount > 0 && (
+              <span className="ml-badge-counter">{unreadNotificationsCount}</span>
+            )}
           </button>
 
           {/* Mercado Livre Style Cart Button */}
           {onSelectTab && (
             <button
-              className={`ml-cart-button ${currentTab === 'cart' ? 'active' : ''}`}
+              className={`ml-icon-btn ml-cart-btn ${currentTab === 'cart' ? 'active' : ''}`}
               onClick={() => onSelectTab('cart')}
               aria-label={`Carrinho com ${totals.itemCount} itens`}
               title="Ver Carrinho"
             >
-              <div className="ml-cart-icon-box">
-                <ShoppingBag size={20} />
-                {totals.itemCount > 0 && (
-                  <span className="ml-cart-count-badge">{totals.itemCount}</span>
-                )}
-              </div>
+              <ShoppingCart size={19} strokeWidth={2} />
+              {totals.itemCount > 0 && (
+                <span className="ml-badge-counter ml-cart-badge">{totals.itemCount}</span>
+              )}
             </button>
           )}
         </div>

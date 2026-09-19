@@ -2016,6 +2016,10 @@ button:active,
    MERCADO LIVRE STYLE DESKTOP EXPERIENCE (>= 1024px)
    ========================================================================== */
 
+/* ==========================================================================
+   MERCADO LIVRE STYLE DESKTOP EXPERIENCE (>= 1024px)
+   ========================================================================== */
+
 /* Header 2-Tier Layout */
 .ml-header-top-row,
 .ml-header-bottom-row {
@@ -2036,26 +2040,37 @@ button:active,
 
   .ml-desktop-header {
     flex-direction: column;
-    padding: 12px 24px 10px 24px !important;
-    gap: 12px !important;
-    background-color: var(--bg-app);
-    border-bottom: 1px solid var(--border-subtle);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    padding: 10px 0 12px 0 !important;
+    gap: 10px !important;
+    background-color: var(--color-primary);
+    border-bottom: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
-  /* Tier 1: Logo + Search + Promo Banner */
-  .ml-header-top-row {
+  .dark-theme .ml-desktop-header {
+    background-color: #0F172A;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Tier 1 & Tier 2 Container Grids */
+  .ml-header-top-row,
+  .ml-header-bottom-row {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 16px;
   }
 
+  /* Left Column: Brand Logo */
   .ml-header-logo-box {
+    width: 180px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     cursor: pointer;
     flex-shrink: 0;
     transition: transform 0.2s ease;
@@ -2066,15 +2081,21 @@ button:active,
   }
 
   .ml-logo-badge {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+  }
+
+  .dark-theme .ml-logo-badge {
+    background: var(--color-primary);
     color: #FFFFFF;
-    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.3);
   }
 
   .ml-logo-text-box {
@@ -2084,40 +2105,39 @@ button:active,
   }
 
   .ml-logo-brand-title {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 900;
     letter-spacing: -0.5px;
-    color: var(--text-primary);
+    color: #FFFFFF;
   }
 
   .ml-logo-brand-sub {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     letter-spacing: 1.5px;
-    color: var(--color-primary);
+    color: rgba(255, 255, 255, 0.85);
     margin-top: 2px;
   }
 
-  /* Mercado Livre Iconic Wide Search Bar */
+  /* Center Column: Mercado Livre Iconic Wide Search Bar */
   .ml-header-search-form {
     flex: 1;
-    max-width: 620px;
+    max-width: 580px;
+    height: 40px;
     display: flex;
     align-items: center;
-    background-color: var(--bg-card);
-    border-radius: var(--radius-xs);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--border-subtle);
-    height: 42px;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    border: none;
     padding: 0 4px 0 16px;
     cursor: pointer;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: box-shadow 0.2s ease;
   }
 
   .ml-header-search-form:hover,
   .ml-header-search-form:focus-within {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
-    border-color: rgba(var(--color-primary-rgb), 0.5);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.28);
   }
 
   .ml-header-search-input {
@@ -2126,265 +2146,327 @@ button:active,
     border: none;
     outline: none;
     font-size: 14px;
-    color: var(--text-primary);
+    color: #333333;
     cursor: pointer;
   }
 
   .ml-header-search-input::placeholder {
-    color: var(--text-muted);
+    color: #737373;
+    font-weight: 400;
   }
 
   .ml-search-divider {
     width: 1px;
-    height: 24px;
-    background-color: var(--border-subtle);
+    height: 22px;
+    background-color: #E5E7EB;
     margin: 0 8px;
   }
 
   .ml-header-search-btn {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-muted);
-    border-radius: var(--radius-xs);
-    transition: color 0.2s, background-color 0.2s;
+    color: #666666;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s;
   }
 
   .ml-header-search-btn:hover {
     color: var(--color-primary);
-    background-color: var(--color-primary-light);
+    background-color: rgba(0, 0, 0, 0.04);
   }
 
-  /* Promo Banner Tag on Right */
+  /* Right Column: Meli+ Style Pill Banner */
   .ml-header-promo-banner {
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 6px 14px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 9999px;
+    padding: 3px 14px 3px 4px;
     cursor: pointer;
     flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   .ml-header-promo-banner:hover {
     transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
   }
 
-  .ml-promo-banner-badge {
-    background-color: rgba(0, 166, 80, 0.12);
-    color: #00A650;
-    font-size: 11px;
-    font-weight: 800;
-    padding: 4px 8px;
-    border-radius: 6px;
+  .ml-promo-badge {
+    background: linear-gradient(135deg, #EC4899 0%, #BE185D 100%);
+    border-radius: 9999px;
+    padding: 3px 10px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 1px;
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 1.2;
   }
 
-  .ml-promo-banner-text {
+  .ml-promo-badge-text {
+    letter-spacing: -0.3px;
+  }
+
+  .ml-promo-badge-plus {
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .ml-promo-text {
     display: flex;
     flex-direction: column;
     line-height: 1.15;
   }
 
   .ml-promo-text-bold {
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 800;
-    color: var(--text-primary);
+    color: #0F172A;
+    white-space: nowrap;
   }
 
   .ml-promo-text-sub {
     font-size: 11px;
-    color: var(--text-muted);
     font-weight: 500;
+    color: #475569;
+    white-space: nowrap;
   }
 
-  /* Tier 2: Location + Nav Menu + User Menu */
+  /* =========================================================================
+     DESKTOP TIER 2: Location + Nav Menu + User Menu
+     ========================================================================= */
   .ml-header-bottom-row {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 13.5px;
+    font-size: 13px;
   }
 
+  /* Left Column: Mercado Livre Delivery Address Selector (Clean, no box) */
   .ml-header-address-btn {
+    width: 180px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 6px;
     cursor: pointer;
-    max-width: 240px;
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
+    border: none;
+    background: transparent;
+    padding: 2px 0;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
   }
 
   .ml-header-address-btn:hover {
-    background-color: var(--bg-card-muted);
+    opacity: 0.85;
   }
 
   .ml-address-pin {
-    color: var(--text-muted);
+    color: #FFFFFF;
     flex-shrink: 0;
+    margin-top: 1px;
   }
 
   .ml-address-text-box {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 
   .ml-address-label {
     font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .ml-address-street {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-primary);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .ml-address-chevron {
-    color: var(--text-muted);
-    flex-shrink: 0;
+  .ml-address-street {
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 155px;
   }
 
-  /* Nav Menu in Center */
+  /* Center Column: Navigation Links */
   .ml-header-nav-menu {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
+    overflow: hidden;
   }
 
   .ml-nav-link {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    font-weight: 500;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 6px;
-    border-radius: 4px;
-    transition: color 0.2s, background-color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 3px 0;
+    transition: color 0.15s;
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .ml-nav-link:hover {
-    color: var(--color-primary);
+    color: #FFFFFF;
   }
 
   .ml-nav-link.active {
-    color: var(--color-primary);
-    font-weight: 700;
+    color: #FFFFFF;
+    font-weight: 600;
   }
 
-  .ml-nav-has-sub {
-    cursor: pointer;
+  .ml-nav-with-badge {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: -6px;
   }
 
-  /* User Menu on Right */
+  .ml-nav-badge-pill {
+    font-size: 8px;
+    font-weight: 800;
+    background-color: #00A650;
+    color: #FFFFFF;
+    padding: 1px 4px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  /* Right Column: User Profile, Orders, Favorites & Cart */
   .ml-header-user-menu {
     display: flex;
     align-items: center;
     gap: 14px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+
+  .ml-user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 400;
+    padding: 2px 0;
+    transition: color 0.15s;
+    white-space: nowrap;
+  }
+
+  .ml-user-profile-btn:hover {
+    color: #FFFFFF;
+  }
+
+  .ml-user-avatar-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: #FFFFFF;
+    flex-shrink: 0;
+  }
+
+  .ml-user-name {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
   }
 
   .ml-user-link {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 6px;
-    border-radius: 4px;
-    transition: color 0.2s;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 0;
+    transition: color 0.15s;
+    white-space: nowrap;
   }
 
   .ml-user-link:hover,
   .ml-user-link.active {
-    color: var(--color-primary);
-  }
-
-  .ml-theme-toggle-btn,
-  .ml-notifications-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-secondary);
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    position: relative;
-    transition: color 0.2s, background-color 0.2s;
-  }
-
-  .ml-theme-toggle-btn:hover,
-  .ml-notifications-btn:hover {
-    color: var(--color-primary);
-    background-color: var(--color-primary-light);
-  }
-
-  .ml-badge-dot {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: var(--color-accent-red);
-    border: 1.5px solid var(--bg-card);
-  }
-
-  /* Cart Button with ML Red Badge */
-  .ml-cart-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-primary);
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: color 0.2s;
-  }
-
-  .ml-cart-button:hover,
-  .ml-cart-button.active {
-    color: var(--color-primary);
-  }
-
-  .ml-cart-icon-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ml-cart-count-badge {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: var(--color-accent-red);
     color: #FFFFFF;
-    font-size: 10px;
+  }
+
+  .ml-icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    background: transparent;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.15s;
+  }
+
+  .ml-icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .ml-badge-counter {
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    min-width: 15px;
+    height: 15px;
+    border-radius: 9999px;
+    background-color: #EF4444;
+    color: #FFFFFF;
+    font-size: 9.5px;
     font-weight: 800;
-    padding: 1px 5px;
-    border-radius: var(--radius-full);
-    border: 1.5px solid var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  .ml-cart-badge {
+    background-color: #EF4444;
   }
 }
+
 
 /* ==========================================================================
    DESKTOP BENEFITS BAR (ESTILO MERCADO LIVRE)
