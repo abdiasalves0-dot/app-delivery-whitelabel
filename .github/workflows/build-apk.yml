@@ -1,0 +1,91 @@
+name: Build & Release Android APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web application
+        run: npm run build
+
+      - name: Sync Capacitor Android
+        run: npx cap sync android
+
+      - name: Make Gradle executable
+        run: chmod +x android/gradlew
+
+      - name: Build Android APK
+        run: |
+          cd android
+          ./gradlew assembleDebug --stacktrace
+          cd ..
+
+      - name: Prepare APK Asset
+        run: |
+          mkdir -p release-assets
+          cp android/app/build/outputs/apk/debug/app-debug.apk release-assets/app-delivery-whitelabel.apk
+          echo "APK successfully generated at release-assets/app-delivery-whitelabel.apk"
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-delivery-whitelabel-apk
+          path: release-assets/app-delivery-whitelabel.apk
+          retention-days: 30
+
+      - name: Create GitHub Release with APK
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        with:
+          tag_name: ${{ github.ref_name || 'v1.0.0' }}
+          name: Release ${{ github.ref_name || 'v1.0.0' }} - Delivery App Android APK
+          body: |
+            ## 🚀 Delivery App Whitelabel - Release Oficial
+
+            O APK Android foi compilado com sucesso!
+            
+            ### 📦 Download:
+            - Baixe o arquivo **`app-delivery-whitelabel.apk`** em anexo nesta release.
+            - Instale diretamente em qualquer smartphone Android.
+            
+            ### ✨ Recursos incluídos:
+            - Design fiel e responsivo com Motion Design de primeira linha
+            - Catálogo completo de produtos com fotos em cards estilo Mercado Livre
+            - Ícones Lucide vetorizados em alta resolução
+            - Fluxo completo: Carrinho, Cupom, Endereços, PIX e Rastreamento de Pedido
+          files: release-assets/app-delivery-whitelabel.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
