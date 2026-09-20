@@ -145,6 +145,11 @@ const AppContent: React.FC = () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onAddedToCartToast={() => showToast('success', `${selectedProduct.name} adicionado ao carrinho!`)}
+              onSelectProduct={(p) => {
+                setSelectedProduct(p);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              allProducts={mockProducts}
             />
           ) : (
             <div key={currentTab} className="tab-view-animated">

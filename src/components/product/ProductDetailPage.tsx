@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft, Heart, Share2, Star, Check, Trash2, Plus, Minus,
   CheckCircle2, Package, ShieldCheck, Building2,
-  Truck, Zap, ChevronRight, Award, ThumbsUp, Clock, MessageSquare
+  Truck, Zap, ChevronRight, ChevronLeft, Award, ThumbsUp, Clock, MessageSquare
 } from 'lucide-react';
 import { Product, ProductIngredient, ProductSizeOption } from '../../types/product';
+import { mockProducts } from '../../data/mockProducts';
 import { useCart } from '../../context/CartContext';
 import { useFavorites } from '../../context/FavoritesContext';
 import { formatCurrency } from '../../utils/formatters';
@@ -13,16 +14,41 @@ interface ProductDetailPageProps {
   product: Product;
   onBack: () => void;
   onAddedToCartToast?: () => void;
+  onSelectProduct?: (product: Product) => void;
+  allProducts?: Product[];
 }
 
 export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   product,
   onBack,
-  onAddedToCartToast
+  onAddedToCartToast,
+  onSelectProduct,
+  allProducts
 }) => {
   const { addToCart } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(product.id);
+
+  // Pool de produtos para recomendações
+  const productCatalog = allProducts && allProducts.length > 0 ? allProducts : mockProducts;
+
+  // Sessão 1: Quem comprou este produto também comprou (mesma categoria ou relacionados)
+  const relatedProducts = productCatalog
+    .filter(p => p.id !== product.id && p.category === product.category)
+    .concat(productCatalog.filter(p => p.id !== product.id && p.category !== product.category))
+    .slice(0, 10);
+
+  // Sessão 2: Mais produtos da distribuidora (mais vendidos ou da mesma distribuidora)
+  const sellerProducts = productCatalog
+    .filter(p => p.id !== product.id && (p.isBestSeller || p.restaurant === product.restaurant))
+    .concat(productCatalog.filter(p => p.id !== product.id))
+    .slice(0, 10);
+
+  // Sessão 3: Você também pode se interessar por (populares e ofertas)
+  const suggestedProducts = productCatalog
+    .filter(p => p.id !== product.id && p.isPopular)
+    .concat(productCatalog.filter(p => p.id !== product.id))
+    .slice(0, 10);
 
   // Default to the medium or first size
   const defaultSize = product.sizes.find(s => s.isDefault) || product.sizes[0];
@@ -547,6 +573,146 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* =================================================================
+          3 SESSÕES DE CARROSSEIS DE OUTROS PRODUTOS (FILAS ESTILO MERCADO LIVRE)
+          ================================================================= */}
+      <div className="ml-pdp-recommendations-wrapper">
+        {/* Sessão 1: Quem comprou este produto também comprou */}
+        <ProductCarouselSection
+          title="Quem comprou este produto também comprou"
+          subtitle="Itens frequentemente adquiridos em conjunto"
+          products={relatedProducts}
+          onSelectProduct={onSelectProduct}
+        />
+
+        {/* Sessão 2: Mais produtos da distribuidora */}
+        <ProductCarouselSection
+          title="Mais produtos da distribuidora"
+          subtitle={`Outras opções populares de ${product.restaurant}`}
+          products={sellerProducts}
+          onSelectProduct={onSelectProduct}
+        />
+
+        {/* Sessão 3: Você também pode se interessar por */}
+        <ProductCarouselSection
+          title="Você também pode se interessar por"
+          subtitle="Recomendações baseadas no seu perfil e ofertas do dia"
+          products={suggestedProducts}
+          onSelectProduct={onSelectProduct}
+        />
+      </div>
     </div>
+  );
+};
+
+/* --------------------------------------------------------------------------
+   SUB-COMPONENTE: CARROSSEL / FILA DE PRODUTOS ESTILO MERCADO LIVRE
+   -------------------------------------------------------------------------- */
+interface ProductCarouselSectionProps {
+  title: string;
+  subtitle?: string;
+  products: Product[];
+  onSelectProduct?: (product: Product) => void;
+}
+
+const ProductCarouselSection: React.FC<ProductCarouselSectionProps> = ({
+  title,
+  subtitle,
+  products,
+  onSelectProduct
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -300 : 300;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  if (!products || products.length === 0) return null;
+
+  return (
+    <section className="ml-pdp-carousel-section">
+      <div className="ml-pdp-carousel-header">
+        <div className="ml-pdp-carousel-title-col">
+          <h2 className="ml-pdp-carousel-title">{title}</h2>
+          {subtitle && <span className="ml-pdp-carousel-subtitle">{subtitle}</span>}
+        </div>
+
+        <div className="ml-pdp-carousel-controls">
+          <button
+            className="ml-pdp-carousel-arrow-btn"
+            onClick={() => handleScroll('left')}
+            aria-label="Rolar para esquerda"
+            title="Anterior"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            className="ml-pdp-carousel-arrow-btn"
+            onClick={() => handleScroll('right')}
+            aria-label="Rolar para direita"
+            title="Próximo"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
+
+      <div className="ml-pdp-carousel-track" ref={scrollRef}>
+        {products.map(item => {
+          const itemPrice = item.basePrice;
+          const origPrice = itemPrice * 1.15;
+          const instPrice = itemPrice / 3;
+
+          return (
+            <div
+              key={item.id}
+              className="ml-pdp-carousel-card"
+              onClick={() => onSelectProduct?.(item)}
+              role="button"
+              tabIndex={0}
+            >
+              <div className="ml-carousel-card-img-wrapper">
+                <img src={item.image} alt={item.name} className="ml-carousel-card-img" loading="lazy" />
+              </div>
+
+              <div className="ml-carousel-card-content">
+                <div className="ml-carousel-card-pricing">
+                  <span className="ml-carousel-card-old-price">{formatCurrency(origPrice)}</span>
+                  <div className="ml-carousel-card-price-row">
+                    <span className="ml-carousel-card-price">{formatCurrency(itemPrice)}</span>
+                    <span className="ml-carousel-card-discount">15% OFF</span>
+                  </div>
+                  <span className="ml-carousel-card-installments">
+                    em <strong>3x de {formatCurrency(instPrice)}</strong> sem juros
+                  </span>
+                </div>
+
+                <div className="ml-carousel-card-shipping">
+                  <span className="ml-carousel-card-free-shipping">Frete grátis</span>
+                  <span className="ml-carousel-card-full-badge">
+                    <Zap size={10} fill="currentColor" />
+                    <span>FULL</span>
+                  </span>
+                </div>
+
+                <h3 className="ml-carousel-card-title">{item.name}</h3>
+
+                <div className="ml-carousel-card-meta">
+                  <div className="ml-carousel-card-stars">
+                    <Star size={11} fill="#3483FA" color="#3483FA" />
+                    <span>{item.rating}</span>
+                  </div>
+                  <span className="ml-carousel-card-reviews">({item.reviewsCount})</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 };
