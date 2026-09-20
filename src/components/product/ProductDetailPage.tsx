@@ -114,20 +114,20 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         <div className="ml-pdp-breadcrumbs-left">
           <button className="ml-pdp-back-btn" onClick={onBack}>
             <ArrowLeft size={16} />
-            <span>Voltar à lista</span>
+            <span>Voltar</span>
           </button>
           <span className="ml-pdp-crumb-divider">|</span>
-          <span className="ml-pdp-crumb">Alimentos e Bebidas</span>
-          <ChevronRight size={13} className="text-muted" />
-          <span className="ml-pdp-crumb">Distribuidora</span>
-          <ChevronRight size={13} className="text-muted" />
+          <span className="ml-pdp-crumb ml-pdp-crumb-desktop">Alimentos e Bebidas</span>
+          <ChevronRight size={13} className="text-muted ml-pdp-crumb-desktop" />
+          <span className="ml-pdp-crumb ml-pdp-crumb-desktop">Distribuidora</span>
+          <ChevronRight size={13} className="text-muted ml-pdp-crumb-desktop" />
           <span className="ml-pdp-crumb active">{product.category.toUpperCase()}</span>
         </div>
 
         <div className="ml-pdp-breadcrumbs-right">
           <button className="ml-pdp-action-btn" onClick={handleShare}>
             {copiedShare ? <CheckCircle2 size={15} color="#22C55E" /> : <Share2 size={15} />}
-            <span>{copiedShare ? 'Link copiado!' : 'Compartilhar'}</span>
+            <span className="ml-pdp-action-label">{copiedShare ? 'Copiado!' : 'Compartilhar'}</span>
           </button>
 
           <button
@@ -135,7 +135,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             onClick={() => toggleFavorite(product.id)}
           >
             <Heart size={15} fill={favorited ? '#3483FA' : 'none'} color={favorited ? '#3483FA' : 'currentColor'} />
-            <span>{favorited ? 'Salvo nos favoritos' : 'Favoritar'}</span>
+            <span className="ml-pdp-action-label">{favorited ? 'Salvo' : 'Favoritar'}</span>
           </button>
         </div>
       </div>

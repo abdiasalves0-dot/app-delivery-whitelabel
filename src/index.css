@@ -3175,14 +3175,18 @@ button:active,
 
 /* ==========================================================================
    MERCADO LIVRE DEDICATED PDP (PRODUCT DETAIL PAGE)
+   Mobile-First & Desktop Responsive
    ========================================================================== */
+
+/* Page Shell */
 .ml-pdp-dedicated-page {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 16px 20px 60px 20px;
+  padding: 8px 10px 100px 10px;
 }
 
+/* Card Container */
 .ml-pdp-main-card {
   background-color: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -3191,137 +3195,1020 @@ button:active,
   overflow: hidden;
 }
 
-@media (max-width: 1023px) {
+/* Breadcrumbs & Actions Top Bar */
+.ml-pdp-breadcrumbs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-card-muted);
+  gap: 10px;
+}
+
+.ml-pdp-breadcrumbs-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.ml-pdp-breadcrumbs-left::-webkit-scrollbar {
+  display: none;
+}
+
+.ml-pdp-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3483FA;
+  cursor: pointer;
+  padding: 4px 0;
+  flex-shrink: 0;
+}
+
+.ml-pdp-back-btn:hover {
+  text-decoration: underline;
+}
+
+.ml-pdp-crumb-divider {
+  color: var(--border-subtle);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+.ml-pdp-crumb {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.ml-pdp-crumb.active {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.ml-pdp-breadcrumbs-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.ml-pdp-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3483FA;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.ml-pdp-action-btn:hover {
+  background-color: rgba(52, 131, 250, 0.08);
+}
+
+.ml-pdp-action-btn.favorited {
+  color: #3483FA;
+}
+
+/* 3-Column Base (Mobile: Stacked) */
+.ml-pdp-3col-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+}
+
+/* -------------------------------------------------------------
+   COLUMN 1: GALLERY
+   ------------------------------------------------------------- */
+.ml-pdp-col-gallery {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+  width: 100%;
+}
+
+.ml-gallery-thumbnails {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.ml-gallery-thumb-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-subtle);
+  padding: 3px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.ml-gallery-thumb-btn.active,
+.ml-gallery-thumb-btn:hover {
+  border-color: #3483FA;
+  box-shadow: 0 0 0 1px #3483FA;
+}
+
+.ml-gallery-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ml-gallery-main-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+}
+
+.ml-gallery-main-display {
+  width: 100%;
+  height: 320px;
+  min-height: 260px;
+  max-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  padding: 16px;
+  overflow: hidden;
+}
+
+.ml-pdp-full-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #FFFFFF;
+  color: #00A650;
+  font-size: 11px;
+  font-weight: 900;
+  font-style: italic;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 166, 80, 0.3);
+  z-index: 2;
+}
+
+.ml-gallery-hero-image {
+  width: 100%;
+  height: 100%;
+  max-height: 290px;
+  object-fit: contain;
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.ml-gallery-hero-image:hover {
+  transform: scale(1.04);
+}
+
+.ml-gallery-trust-badges {
+  margin-top: 14px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+}
+
+.ml-trust-badge-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* -------------------------------------------------------------
+   COLUMN 2: CENTER DETAILS
+   ------------------------------------------------------------- */
+.ml-pdp-col-center {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  min-width: 0;
+}
+
+.ml-pdp-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.ml-pdp-title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.ml-pdp-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ml-pdp-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.ml-pdp-rating-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ml-pdp-reviews-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Pricing Box */
+.ml-pdp-pricing-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: var(--bg-card-muted);
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.ml-pdp-original-price {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.ml-pdp-current-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ml-pdp-currency-symbol {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.ml-pdp-price-amount {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ml-pdp-discount-pill {
+  font-size: 14px;
+  font-weight: 800;
+  color: #00A650;
+}
+
+.ml-pdp-installments {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.ml-pdp-pix-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #00A650;
+  margin-top: 4px;
+}
+
+/* Options Section */
+.ml-pdp-options-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ml-pdp-section-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ml-pdp-size-selector-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ml-pdp-size-pill {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-card);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.ml-pdp-size-pill.selected {
+  border-color: #3483FA;
+  background-color: rgba(52, 131, 250, 0.06);
+}
+
+.ml-size-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ml-size-price {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.ml-pdp-ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.ml-pdp-ingredient-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-card);
+  cursor: pointer;
+}
+
+.ml-pdp-ingredient-card.selected {
+  border-color: #3483FA;
+  background-color: rgba(52, 131, 250, 0.06);
+}
+
+.ml-ingredient-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.ml-pdp-ingredient-card.selected .ml-ingredient-check {
+  background-color: #3483FA;
+  border-color: #3483FA;
+}
+
+.ml-ingredient-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ml-ingredient-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ml-ingredient-price {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Highlights, Specs, Description, Q&A, Reviews */
+.ml-pdp-highlights-box,
+.ml-pdp-specs-box,
+.ml-pdp-description-box,
+.ml-pdp-qa-box,
+.ml-pdp-reviews-box {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 18px;
+}
+
+.ml-pdp-box-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ml-pdp-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ml-pdp-bullet-list li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  position: relative;
+  padding-left: 18px;
+}
+
+.ml-pdp-bullet-list li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: #3483FA;
+  font-size: 16px;
+}
+
+/* Specs Table */
+.ml-pdp-specs-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ml-spec-row {
+  display: flex;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ml-spec-row:last-child {
+  border-bottom: none;
+}
+
+.ml-spec-name {
+  width: 40%;
+  padding: 10px 12px;
+  background-color: var(--bg-card-muted);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.ml-spec-value {
+  width: 60%;
+  padding: 10px 12px;
+  color: var(--text-primary);
+}
+
+.ml-pdp-description-text {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Q&A Form */
+.ml-qa-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ml-qa-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-card);
+  font-size: 13px;
+  color: var(--text-primary);
+  min-width: 0;
+}
+
+.ml-qa-btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  background-color: #3483FA;
+  color: #FFFFFF;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ml-qa-success-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #15803D;
+  border-radius: 6px;
+  font-size: 12.5px;
+  margin-bottom: 14px;
+}
+
+.ml-qa-history {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ml-qa-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml-qa-question {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ml-qa-answer {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  padding-left: 12px;
+  border-left: 2px solid var(--border-subtle);
+}
+
+.ml-qa-answer-tag {
+  font-weight: 700;
+  color: #3483FA;
+  margin-right: 4px;
+}
+
+/* Reviews Summary */
+.ml-reviews-summary {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ml-reviews-score-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.ml-score-large {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--text-primary);
+}
+
+.ml-reviews-count-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.ml-reviews-bars-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ml-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ml-bar-track {
+  flex: 1;
+  height: 6px;
+  background-color: var(--bg-card-muted);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ml-bar-fill {
+  height: 100%;
+  background-color: #3483FA;
+  border-radius: 3px;
+}
+
+.ml-testimonial-item {
+  background-color: var(--bg-card-muted);
+  padding: 14px 16px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ml-testimonial-text {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+.ml-testimonial-author {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------------
+   COLUMN 3: BUY BOX
+   ------------------------------------------------------------- */
+.ml-pdp-col-buybox {
+  width: 100%;
+}
+
+.ml-buybox-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-card);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ml-buybox-shipping {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml-shipping-headline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ml-shipping-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #00A650;
+}
+
+.ml-shipping-badge-full {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 900;
+  color: #00A650;
+  background-color: rgba(0, 166, 80, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.ml-shipping-address {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.ml-buybox-stock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ml-stock-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ml-stock-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.ml-buybox-quantity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ml-qty-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ml-qty-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ml-qty-btn {
+  width: 32px;
+  height: 32px;
+  background-color: var(--bg-card-muted);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ml-qty-btn:hover {
+  background-color: var(--border-subtle);
+}
+
+.ml-qty-number {
+  width: 36px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ml-qty-available {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.ml-buybox-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.ml-btn-buy-now {
+  width: 100%;
+  padding: 13px;
+  border-radius: 6px;
+  background-color: #3483FA;
+  color: #FFFFFF;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(52, 131, 250, 0.3);
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.ml-btn-buy-now:hover {
+  background-color: #2968C8;
+  transform: translateY(-1px);
+}
+
+.ml-btn-add-cart {
+  width: 100%;
+  padding: 13px;
+  border-radius: 6px;
+  background-color: rgba(52, 131, 250, 0.1);
+  color: #3483FA;
+  border: 1px solid rgba(52, 131, 250, 0.25);
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.ml-btn-add-cart:hover {
+  background-color: rgba(52, 131, 250, 0.18);
+  border-color: #3483FA;
+}
+
+/* Seller Card */
+.ml-seller-info-card {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ml-seller-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ml-seller-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ml-seller-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ml-seller-name {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.ml-seller-reputation-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ml-seller-badge-platinum {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #00A650;
+}
+
+.ml-seller-reputation-desc {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* Thermometer */
+.ml-reputation-thermometer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  height: 6px;
+}
+
+.ml-thermometer-step {
+  background-color: #E2E8F0;
+  border-radius: 2px;
+}
+
+.ml-thermometer-step.active {
+  background-color: #00A650;
+}
+
+.ml-seller-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.ml-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.ml-metric-value {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.ml-metric-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+/* Guarantees */
+.ml-buybox-guarantees {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ml-guarantee-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ml-guarantee-row p {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* ==========================================================================
+   MOBILE-SPECIFIC REFINEMENTS (< 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .ml-pdp-crumb-desktop {
+    display: none !important;
+  }
+
+  .ml-pdp-action-label {
+    display: none;
+  }
+
+  .ml-pdp-action-btn {
+    padding: 6px;
+  }
+
   .ml-pdp-dedicated-page {
-    padding: 12px 14px 48px 14px;
+    padding: 6px 8px 100px 8px;
   }
 
   .ml-pdp-3col-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 16px;
+    padding: 12px;
+    gap: 16px;
   }
 
-  .ml-pdp-col-gallery {
-    flex-direction: column-reverse;
+  .ml-gallery-main-display {
+    height: 280px;
+    max-height: 320px;
+    padding: 12px;
   }
 
-  .ml-gallery-thumbnails {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 8px;
+  .ml-gallery-hero-image {
+    max-height: 250px;
   }
 
-  .ml-pdp-col-buybox {
-    order: 3;
+  .ml-pdp-title {
+    font-size: 18px;
+  }
+
+  .ml-pdp-price-amount {
+    font-size: 26px;
   }
 }
 
+/* ==========================================================================
+   DESKTOP-SPECIFIC LAYOUT (>= 1024px)
+   ========================================================================== */
 @media (min-width: 1024px) {
   .ml-pdp-dedicated-page {
     padding: 24px 20px 64px 20px;
   }
 
-  /* Breadcrumbs & Actions Top Bar */
   .ml-pdp-breadcrumbs-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 14px 28px;
-    border-bottom: 1px solid var(--border-subtle);
-    background-color: var(--bg-card-muted);
   }
 
   .ml-pdp-breadcrumbs-left {
-    display: flex;
-    align-items: center;
+    font-size: 13px;
     gap: 8px;
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-
-  .ml-pdp-back-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    color: #3483FA;
-    cursor: pointer;
-  }
-
-  .ml-pdp-back-btn:hover {
-    text-decoration: underline;
-  }
-
-  .ml-pdp-crumb-divider {
-    color: var(--border-subtle);
-    margin: 0 4px;
-  }
-
-  .ml-pdp-crumb {
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .ml-pdp-crumb.active {
-    color: var(--text-primary);
-    font-weight: 700;
+    overflow: visible;
   }
 
   .ml-pdp-breadcrumbs-right {
-    display: flex;
-    align-items: center;
     gap: 14px;
   }
 
-  .ml-pdp-action-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    color: #3483FA;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-  }
-
-  .ml-pdp-action-btn:hover {
-    background-color: rgba(52, 131, 250, 0.08);
-  }
-
-  .ml-pdp-action-btn.favorited {
-    color: #3483FA;
-  }
-
-  .ml-pdp-close-desktop-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-  }
-
-  .ml-pdp-close-desktop-btn:hover {
-    background-color: var(--color-accent-red);
-    color: #FFFFFF;
-    border-color: var(--color-accent-red);
-  }
-
-  /* 3-Column Container */
   .ml-pdp-3col-container {
     display: grid;
     grid-template-columns: 500px 1fr 340px;
@@ -3330,817 +4217,62 @@ button:active,
     align-items: flex-start;
   }
 
-  /* Column 1: Gallery */
   .ml-pdp-col-gallery {
-    display: flex;
+    flex-direction: row;
     gap: 16px;
     position: sticky;
     top: 16px;
+    width: auto;
   }
 
   .ml-gallery-thumbnails {
-    display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: visible;
+    padding-bottom: 0;
   }
 
   .ml-gallery-thumb-btn {
     width: 52px;
     height: 52px;
-    border-radius: 6px;
-    border: 1.5px solid var(--border-subtle);
     padding: 4px;
-    background-color: #FFFFFF;
-    cursor: pointer;
-    overflow: hidden;
-    transition: border-color 0.2s;
-    flex-shrink: 0;
-  }
-
-  .ml-gallery-thumb-btn.active,
-  .ml-gallery-thumb-btn:hover {
-    border-color: #3483FA;
-    box-shadow: 0 0 0 1px #3483FA;
-  }
-
-  .ml-gallery-thumb-btn img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .ml-gallery-main-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
   }
 
   .ml-gallery-main-display {
-    width: 100%;
     height: 520px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: #FFFFFF;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    max-height: 520px;
     padding: 20px;
-    overflow: hidden;
-  }
-
-  .ml-pdp-full-badge {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    background-color: #FFFFFF;
-    color: #00A650;
-    font-size: 11px;
-    font-weight: 900;
-    font-style: italic;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 166, 80, 0.3);
-    z-index: 2;
   }
 
   .ml-gallery-hero-image {
-    width: 100%;
-    height: 100%;
     max-height: 480px;
-    object-fit: contain;
-    transition: transform 0.3s var(--ease-spring);
   }
 
-  .ml-gallery-hero-image:hover {
-    transform: scale(1.06);
-  }
-
-  .ml-gallery-trust-badges {
-    margin-top: 16px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 0 4px;
-  }
-
-  .ml-trust-badge-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.4;
-  }
-
-  /* Column 2: Center Details */
   .ml-pdp-col-center {
-    display: flex;
-    flex-direction: column;
     gap: 20px;
-  }
-
-  .ml-pdp-meta-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--text-muted);
   }
 
   .ml-pdp-title {
     font-size: 22px;
-    font-weight: 800;
     line-height: 1.25;
-    color: var(--text-primary);
-  }
-
-  .ml-pdp-rating-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .ml-pdp-stars {
-    display: flex;
-    gap: 2px;
-  }
-
-  .ml-pdp-rating-number {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .ml-pdp-reviews-count {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  /* Pricing Box */
-  .ml-pdp-pricing-box {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background-color: var(--bg-card-muted);
-    padding: 16px 20px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
-  }
-
-  .ml-pdp-original-price {
-    font-size: 13px;
-    color: var(--text-muted);
-    text-decoration: line-through;
-  }
-
-  .ml-pdp-current-price-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-
-  .ml-pdp-currency-symbol {
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--text-primary);
   }
 
   .ml-pdp-price-amount {
     font-size: 32px;
-    font-weight: 800;
-    color: var(--text-primary);
-  }
-
-  .ml-pdp-discount-pill {
-    font-size: 14px;
-    font-weight: 800;
-    color: #00A650;
-  }
-
-  .ml-pdp-installments {
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-
-  .ml-pdp-pix-tag {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #00A650;
-    margin-top: 4px;
-  }
-
-  /* Options Grid */
-  .ml-pdp-options-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .ml-pdp-section-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .ml-pdp-size-selector-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .ml-pdp-size-pill {
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: 1px solid var(--border-subtle);
-    background-color: var(--bg-card);
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
-  }
-
-  .ml-pdp-size-pill.selected {
-    border-color: #3483FA;
-    background-color: rgba(52, 131, 250, 0.06);
-  }
-
-  .ml-size-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .ml-size-price {
-    font-size: 12px;
-    color: var(--text-muted);
   }
 
   .ml-pdp-ingredients-grid {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
   }
 
-  .ml-pdp-ingredient-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: 1px solid var(--border-subtle);
-    background-color: var(--bg-card);
-    cursor: pointer;
-  }
-
-  .ml-pdp-ingredient-card.selected {
-    border-color: #3483FA;
-    background-color: rgba(52, 131, 250, 0.06);
-  }
-
-  .ml-ingredient-check {
-    width: 18px;
-    height: 18px;
-    border-radius: 4px;
-    border: 1.5px solid var(--border-subtle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
-  }
-
-  .ml-pdp-ingredient-card.selected .ml-ingredient-check {
-    background-color: #3483FA;
-    border-color: #3483FA;
-  }
-
-  .ml-ingredient-name {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: block;
-  }
-
-  .ml-ingredient-price {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  /* Highlights Box ("O que você precisa saber...") */
-  .ml-pdp-highlights-box,
-  .ml-pdp-specs-box,
-  .ml-pdp-description-box,
-  .ml-pdp-qa-box,
-  .ml-pdp-reviews-box {
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 20px;
-  }
-
-  .ml-pdp-box-title {
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--text-primary);
-    margin-bottom: 12px;
-  }
-
-  .ml-pdp-bullet-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .ml-pdp-bullet-list li {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.45;
-    position: relative;
-    padding-left: 18px;
-  }
-
-  .ml-pdp-bullet-list li::before {
-    content: "•";
-    position: absolute;
-    left: 4px;
-    color: #3483FA;
-    font-size: 16px;
-  }
-
-  /* Specs Table */
-  .ml-pdp-specs-table {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-subtle);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .ml-spec-row {
-    display: flex;
-    font-size: 13px;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .ml-spec-row:last-child {
-    border-bottom: none;
-  }
-
-  .ml-spec-name {
-    width: 40%;
-    padding: 10px 14px;
-    background-color: var(--bg-card-muted);
-    color: var(--text-secondary);
-    font-weight: 600;
-  }
-
-  .ml-spec-value {
-    width: 60%;
-    padding: 10px 14px;
-    color: var(--text-primary);
-  }
-
-  .ml-pdp-description-text {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* Q&A Form */
-  .ml-qa-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-
-  .ml-qa-input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: 1px solid var(--border-subtle);
-    background-color: var(--bg-card);
-    font-size: 13px;
-    color: var(--text-primary);
-  }
-
-  .ml-qa-btn {
-    padding: 10px 20px;
-    border-radius: 6px;
-    background-color: #3483FA;
-    color: #FFFFFF;
-    border: none;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .ml-qa-success-message {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    background-color: rgba(34, 197, 94, 0.1);
-    color: #15803D;
-    border-radius: 6px;
-    font-size: 12.5px;
-    margin-bottom: 14px;
-  }
-
-  .ml-qa-history {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .ml-qa-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .ml-qa-question {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .ml-qa-answer {
-    font-size: 12.5px;
-    color: var(--text-secondary);
-    padding-left: 12px;
-    border-left: 2px solid var(--border-subtle);
-  }
-
-  .ml-qa-answer-tag {
-    font-weight: 700;
-    color: #3483FA;
-    margin-right: 4px;
-  }
-
-  /* Reviews Summary */
-  .ml-reviews-summary {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .ml-reviews-score-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .ml-score-large {
-    font-size: 38px;
-    font-weight: 900;
-    color: var(--text-primary);
-  }
-
-  .ml-reviews-count-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .ml-reviews-bars-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .ml-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
-
-  .ml-bar-track {
-    flex: 1;
-    height: 6px;
-    background-color: var(--bg-card-muted);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .ml-bar-fill {
-    height: 100%;
-    background-color: #3483FA;
-    border-radius: 3px;
-  }
-
-  .ml-testimonial-item {
-    background-color: var(--bg-card-muted);
-    padding: 14px 18px;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .ml-testimonial-text {
-    font-size: 13px;
-    color: var(--text-primary);
-    font-style: italic;
-  }
-
-  .ml-testimonial-author {
-    font-size: 11.5px;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  /* Column 3: Sticky Buy Box */
   .ml-pdp-col-buybox {
     position: sticky;
-    top: 0;
+    top: 16px;
+    width: 340px;
   }
 
   .ml-buybox-card {
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    background-color: var(--bg-card);
     padding: 22px;
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
     gap: 18px;
-  }
-
-  .ml-buybox-shipping {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .ml-shipping-headline {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .ml-shipping-title {
-    font-size: 15px;
-    font-weight: 800;
-    color: #00A650;
-  }
-
-  .ml-shipping-badge-full {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 10px;
-    font-weight: 900;
-    color: #00A650;
-    background-color: rgba(0, 166, 80, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-style: italic;
-    margin-top: 2px;
-  }
-
-  .ml-shipping-address {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  .ml-buybox-stock {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .ml-stock-badge {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .ml-stock-sub {
-    font-size: 11.5px;
-    color: var(--text-muted);
-  }
-
-  .ml-buybox-quantity-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .ml-qty-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-  }
-
-  .ml-qty-stepper {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--border-subtle);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .ml-qty-btn {
-    width: 32px;
-    height: 32px;
-    background-color: var(--bg-card-muted);
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .ml-qty-btn:hover {
-    background-color: var(--border-subtle);
-  }
-
-  .ml-qty-number {
-    width: 36px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 800;
-    color: var(--text-primary);
-  }
-
-  .ml-qty-available {
-    font-size: 11.5px;
-    color: var(--text-muted);
-  }
-
-  .ml-buybox-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .ml-btn-buy-now {
-    width: 100%;
-    padding: 13px;
-    border-radius: 6px;
-    background-color: #3483FA;
-    color: #FFFFFF;
-    border: none;
-    font-size: 14.5px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(52, 131, 250, 0.3);
-    transition: background-color 0.2s, transform 0.15s;
-  }
-
-  .ml-btn-buy-now:hover {
-    background-color: #2968C8;
-    transform: translateY(-1px);
-  }
-
-  .ml-btn-add-cart {
-    width: 100%;
-    padding: 13px;
-    border-radius: 6px;
-    background-color: rgba(52, 131, 250, 0.1);
-    color: #3483FA;
-    border: 1px solid rgba(52, 131, 250, 0.25);
-    font-size: 14.5px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-  }
-
-  .ml-btn-add-cart:hover {
-    background-color: rgba(52, 131, 250, 0.18);
-    border-color: #3483FA;
-  }
-
-  /* Seller Card */
-  .ml-seller-info-card {
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .ml-seller-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .ml-seller-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .ml-seller-label {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .ml-seller-name {
-    font-size: 13px;
-    color: var(--text-primary);
-  }
-
-  .ml-seller-reputation-box {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .ml-seller-badge-platinum {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 800;
-    color: #00A650;
-  }
-
-  .ml-seller-reputation-desc {
-    font-size: 11.5px;
-    color: var(--text-muted);
-  }
-
-  /* Thermometer */
-  .ml-reputation-thermometer {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 4px;
-    height: 6px;
-  }
-
-  .ml-thermometer-step {
-    background-color: #E2E8F0;
-    border-radius: 2px;
-  }
-
-  .ml-thermometer-step.active {
-    background-color: #00A650;
-  }
-
-  .ml-seller-metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 6px;
-    text-align: center;
-  }
-
-  .ml-metric-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-  }
-
-  .ml-metric-value {
-    font-size: 13px;
-    color: var(--text-primary);
-  }
-
-  .ml-metric-sub {
-    font-size: 10px;
-    color: var(--text-muted);
-    line-height: 1.2;
-  }
-
-  /* Guarantees */
-  .ml-buybox-guarantees {
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .ml-guarantee-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .ml-guarantee-row p {
-    font-size: 11.5px;
-    color: var(--text-muted);
-    line-height: 1.35;
-    margin: 0;
   }
 }
